@@ -11,9 +11,11 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|max:255|unique:users',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8',
+            'password' => 'required|confirmed|string|min:8',
+            'role_name' => 'required|string|max:255',
+            'role_description' => 'required|string|max:255',
         ]);
 
         $user = User::create([
@@ -23,7 +25,15 @@ class AuthController extends Controller
             'confirmed_password' => Hash::make($validatedData['password']),
         ]);
 
-        return response()->json(['message' => 'User registered successfully'], 201);
+        $user->role()->create([
+            'role_name' => $validatedData['role_name'],
+             'description'=> $validatedData['role_description'],
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'User registered successfully'
+        ], 201);        
     }
 
     public function login(Request $request)
@@ -32,7 +42,7 @@ class AuthController extends Controller
             'email' => 'required|string|email',
             'password' => 'required|string',
         ]);
-
+        
         $user = User::where('email', $request->email)->first();
 
         if (!$user || !Hash::check($request->password, $user->confirmed_password)) {

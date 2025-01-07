@@ -32,8 +32,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/role', [RoleController::class, 'destroy']);
 
     //user route for CRUD
+    Route::get('user', [UserController::class,'index']);
     Route::post('user', [UserController::class,'update']);
-    Route::get('user', [UserController::class,'destroy']);
+    Route::delete('user', [UserController::class,'destroy']);
 
 });
 

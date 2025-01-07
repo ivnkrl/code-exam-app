@@ -9,6 +9,14 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+    public function index() {
+        $user = Auth::user();
+        return response()->json([
+            'success'=> true,
+            'message'=>'User fetched successfully',
+            'data'=> $user->toArray()
+        ]);
+    }
     public function update(Request $request)
     {
         try {
