@@ -30,6 +30,12 @@ const routes = [
         name: "Role",
         component: () => import("@/./views/Role.vue"),
         meta: { requiresAuth: true },
+    },
+    {
+        path: "/profile",
+        name: "Profile",
+        component: () => import("@/./views/Profile.vue"),
+        meta: { requiresAuth: true },
     }
 ];
 
@@ -41,7 +47,6 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
     if (to.meta.requiresAuth) {        
         const isAuthenticated = localStorage.getItem('token');
-        console.log("isAuthenticated :",isAuthenticated);
 
         if (!isAuthenticated) {
             next('/login'); // Redirect to login

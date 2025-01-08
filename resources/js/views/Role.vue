@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Role Page</h1>
+                    <h1 class="m-0">Role</h1>
                 </div>
             </div>
         </div>
@@ -51,6 +51,7 @@
                                 aria-describedby=""
                                 v-model="role_description"
                             />
+                            <small id="" v-if="errors.role_description" class="text-danger">{{ errors.role_description[0] }}</small>
                         </div>
 
                         <div class="col-12 mt-3 d-flex justify-content-end">
@@ -122,7 +123,13 @@
                         role_name: this.role_name,
                         description: this.role_description,
                     });
+                    
                     this.role = response.data.data??{};
+
+                    if (this.role !== {}) {
+                        localStorage.setItem('role', JSON.stringify(this.role));
+                    }
+
                     this.role_name = this.role.role_name??'';
                     this.role_description = this.role.description??'';
 

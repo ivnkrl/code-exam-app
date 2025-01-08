@@ -19,34 +19,23 @@ class UserController extends Controller
     }
     public function update(Request $request)
     {
-        try {
-            $validatedData = $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users',
-                'password' => 'required|string|min:8',
-            ]);
+        $user = Auth::user();
 
-            $user = Auth::user();
-            
-            $user = $user->update([
-                'full_name' => $validatedData['name'],
-                'email' => $validatedData['email'],
-                'nominated_password' => Hash::make($validatedData['password']),
-                'confirmed_password' => Hash::make($validatedData['password']),
-            ]);
-
-            return response()->json(data: [
-                'success'=> true,
-                'message'=> 'User updated successfully',
-                'data'=> $user,
-            ]);
-
-        } catch (\Throwable $th) {
-            return response()->json([
-                'success'=> false,
-                'message'=> 'An error occurred: '. $th->getMessage(),
-            ], 500);
-        }
+        $validatedData = $request->validate([
+            'full_name' => 'required|string|max:255|unique:users,full_name,' . $user->id,
+            'email' => ['required', 'email', 'unique:users,email,' . $user->id],
+        ]);
+        
+        $user = $user->update([
+            'full_name' => $validatedData['full_name'],
+            'email' => $validatedData['email'],
+        ]);
+        
+        return response()->json(data: [
+            'success'=> true,
+            'message'=> 'User updated successfully',
+            'data'=> Auth::user()->toArray(),
+        ]);
     }
 
     public function destroy(Request $request) {
@@ -66,3 +55,5 @@ class UserController extends Controller
     }
 
 }
+
+

@@ -24,6 +24,12 @@
           </RouterLink>
         </li>
         <li class="nav-item">
+          <RouterLink :to="{name:'Profile'}" class="nav-link">
+            <i class="nav-icon fa-solid fa-user"></i>
+            <p>Profile</p>
+          </RouterLink>
+        </li>
+        <li class="nav-item">
           <RouterLink :to="{name:'Role'}" class="nav-link">
             <i class="nav-icon fa-solid fa-briefcase"></i>
             <p>Role</p>
@@ -83,12 +89,27 @@
               } catch (error) {
                 this.role = {};
               }
+            },
+            async attachUserRole() {
+                const user = localStorage.getItem('user');
+                const role = localStorage.getItem('role');
+
+                if (user) {
+                  this.user = JSON.parse(user);
+                } else {
+                  this.getUser();
+                }
+
+                if (role) {
+                  this.role = JSON.parse(role);
+                } else {
+                  this.getRole();
+                }
             }
 
       },
       mounted() {
-        this.getUser();
-        this.getRole();
+        this.attachUserRole();
       },
   }
 </script>

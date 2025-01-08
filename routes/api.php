@@ -33,7 +33,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //user route for CRUD
     Route::get('user', [UserController::class,'index']);
-    Route::post('user', [UserController::class,'update']);
+    Route::put('user', [UserController::class,'update']);
     Route::delete('user', [UserController::class,'destroy']);
 
 });

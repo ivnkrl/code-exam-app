@@ -76,6 +76,8 @@
 
                     axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
                     localStorage.setItem('token', response.data.token);
+                    localStorage.setItem('user', JSON.stringify(response.data.user));
+                    localStorage.setItem('role', JSON.stringify(response.data.role));
                     this.$router.push('/dashboard');
                 } catch (error) {
                     this.errors = error.response?.data?.errors || 'Login failed';
