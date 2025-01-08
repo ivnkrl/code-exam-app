@@ -41,8 +41,12 @@
                     <div class="col-8">
 
                     </div>
-                    <div class="col-4">
+                    <div class="col-sm-4">
                         <button type="submit" class="btn btn-primary btn-block">Login</button>
+                    </div>
+
+                    <div class="col-sm-8">
+                        <p class="mb-0">New User? <a href="/register" class="text-center">Register</a></p>
                     </div>
                 </div>
             </form>

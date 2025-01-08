@@ -16,7 +16,7 @@ const routes = [
     {
         path: "/",
         name: "Home",
-        component: () => import("@/./views/Home.vue"),
+        component: () => import("@/./views/Dashboard.vue"),
         meta: { requiresAuth: true },
     },
     {
@@ -36,6 +36,10 @@ const routes = [
         name: "Profile",
         component: () => import("@/./views/Profile.vue"),
         meta: { requiresAuth: true },
+    },
+    {
+        path: '/:catchAll(.*)',
+        redirect: '/login',
     }
 ];
 

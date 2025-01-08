@@ -110,35 +110,27 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        try {
-            $validatedData = $request->validate([
-                'role_name'=> 'required|string|max:255',
-                'description'=> 'required|string|max:255',
-            ]);
+        $validatedData = $request->validate([
+            'role_name'=> 'required|string|max:255',
+            'description'=> 'required|string|max:255',
+        ]);
 
-            $role = Auth::user()->role()->first();
+        $role = Auth::user()->role()->first();
 
-            if (!$role) {
-                return response()->json([
-                    'success'=> false,
-                    'message'=> 'User has no role',
-                ],404);
-            }
-
+        $message = '';
+        if (!$role) {
+            $role = Auth::user()->role()->create($validatedData);
+            $message = 'Role created successfully';
+        } else {
             $role->update($validatedData);
-
-            return response()->json(data: [
-                'success'=> true,
-                'message'=> 'Role updated successfully',
-                'data'=> $role,
-            ]);
-
-        } catch (\Throwable $th) {
-            return response()->json([
-                'success'=> false,
-                'message'=> 'An error occurred: '. $th->getMessage(),
-            ], 500);
+            $message = 'Role updated successfully';
         }
+
+        return response()->json(data: [
+            'success'=> true,
+            'message'=> $message,
+            'data'=> $role,
+            ]);
     }
 
     /**

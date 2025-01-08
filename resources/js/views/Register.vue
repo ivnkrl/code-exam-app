@@ -11,21 +11,21 @@
             <form @submit.prevent="login">
 
                 <div class="row">
-                    <div class="col-6 mb-1">
+                    <div class="col-sm-6 mb-1">
                         <label for="" class="form-label">Name</label>
                         <input
                             type="text"
-                            name="name"
-                            id="name"
+                            name="full_name"
+                            id="full_name"
                             class="form-control"
                             placeholder=""
                             aria-describedby=""
-                            v-model="name"
+                            v-model="full_name"
                         />
-                        <small id="" v-if="errors.name" class="text-danger">{{ errors.name[0] }}</small>
+                        <small id="" v-if="errors.full_name" class="text-danger">{{ errors.full_name[0] }}</small>
                     </div>
 
-                    <div class="col-6 mb-1">
+                    <div class="col-sm-6 mb-1">
                         <label for="" class="form-label">Email</label>
                         <input
                             type="email"
@@ -39,7 +39,7 @@
                         <small id="" v-if="errors.email" class="text-danger">{{ errors.email[0] }}</small>
                     </div>
 
-                    <div class="col-4 mb-1">
+                    <div class="col-sm-4 mb-1">
                         <label for="" class="form-label">Assign Role</label>
                         <input
                             type="text"
@@ -53,12 +53,12 @@
                         <small id="" v-if="errors.role_name" class="text-danger">{{ errors.role_name[0] }}</small>
                     </div>
 
-                    <div class="col-8 mb-1">
+                    <div class="col-sm-8 mb-1">
                         <label for="" class="form-label">Role Description</label>
                         <input
                             type="text"
-                            name="role_name"
-                            id="role_name"
+                            name="role_description"
+                            id="role_description"
                             class="form-control"
                             placeholder=""
                             aria-describedby=""
@@ -67,7 +67,7 @@
                         <small id="" v-if="errors.role_description" class="text-danger">{{ errors.role_description[0] }}</small>
                     </div>
 
-                    <div class="col-6 mb-1">
+                    <div class="col-sm-6 mb-1">
                         <label for="" class="form-label">Password</label>
                         <input
                             type="password"
@@ -81,7 +81,7 @@
                         <small id="" v-if="errors.password" class="text-danger">{{ errors.password[0] }}</small>
                     </div>
 
-                    <div class="col-6 mb-1">
+                    <div class="col-sm-6 mb-1">
                         <label for="" class="form-label">Confirm Password</label>
                         <input
                             type="password"
@@ -98,10 +98,10 @@
                 </div>
 
                 <div class="row">
-                    <div class="col-8 ">
-
+                    <div class="col-sm-8 d-flex align-items-center">
+                        <p class="mb-0">Already have an account? <a href="/login" class="text-center">Login</a></p>
                     </div>
-                    <div class="col-4 mt-3">
+                    <div class="col-sm-4 mt-3">
                         <button type="submit" class="btn btn-primary btn-block">Register</button>
                     </div>
                 </div>
@@ -120,7 +120,7 @@
         name: 'Register',
         data() {
             return {
-                name: '',
+                full_name: '',
                 email: '',
                 password: '',
                 password_confirmation: '',
@@ -133,7 +133,7 @@
             async login() {
                 try {
                     const response = await axios.post('/register', {
-                        name: this.name,
+                        full_name: this.full_name,
                         email: this.email,
                         password: this.password,
                         password_confirmation: this.password_confirmation,
